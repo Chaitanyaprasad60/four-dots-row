@@ -49,8 +49,8 @@ io.on('connection', client => {
             response:"Room Id not present to connect"
         })
     }
-    console.log("req",req.body.roomId,req.body.move)
-    io.sockets.to(req.body.roomId).emit('moveDoneClient',{"move":req.body.move})
+    console.log("req",req.body.roomId,req.body.move,req.body.index)
+    io.sockets.to(req.body.roomId).emit('moveDoneClient',{"move":req.body.move,"index":req.body.index})
     return res.status(200).send({
         status:"success",
         response:"Move Succesful"

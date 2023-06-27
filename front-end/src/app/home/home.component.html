@@ -5,8 +5,9 @@
             <button mat-raised-button color="primary" (click)="createBoard()">2nd Players</button>
         </div>
         <div class="container">
+            <h1>{{title}}</h1>
             <div *ngIf="isGameOver">
-                <p>GAME OVER - {{CURRENT_COLOR}} WINS  !!!</p>            
+                <p>GAME OVER - {{currentMove}} WINS  !!!</p>            
             </div>
             <div>
                 <div class="selectors">
@@ -22,8 +23,8 @@
              
         </div>
         <div class="controls">
-            <button mat-raised-button color="primary" (click)="createBoard()">Reset Game</button>
-            <button mat-raised-button color="primary" (click)="createBoard()">2nd Players</button>
+            <button [disabled]="player2" mat-raised-button color="primary" (click)="copyPlayer2()"><mat-icon>content_copy</mat-icon> Get Player 2 Link</button>
+            <button [disabled]="player2" mat-raised-button color="primary" (click)="openPlayer2()"><mat-icon>open_in_new</mat-icon> Open Player 2</button>
         </div>
     </div>
    

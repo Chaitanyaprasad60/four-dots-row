@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
@@ -18,7 +19,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule, MatButtonModule, MatDividerModule, MatIconModule,
+    HttpClientModule, 
+    MatButtonModule, MatDividerModule, MatIconModule,MatSnackBarModule,
     BrowserAnimationsModule
   ],
   providers: [],
