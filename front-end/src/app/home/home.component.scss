@@ -1,0 +1,98 @@
+:root {
+    --boxColor: red;
+    --boxWidth: 4vw;    
+  }
+  .main{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+  }
+  .container {
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  .board {
+    width: calc(var(--boxWidth)*10);
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8vw;
+    justify-content: center;
+    padding: 10px;
+    background-color: rgb(234 234 234);
+   
+  }
+  
+  .box {
+    height: var(--boxWidth);
+    width: var(--boxWidth);
+    border: 1px solid black;
+    border-radius: 10vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    margin: 0.8vw 0
+  }
+  
+  .selectors {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 0.8vw;
+    padding-bottom: 10px;    
+    border-radius: 50px;
+    
+  }
+  .select-box {
+    height: 4vw;
+    width: 4vw;
+    border-radius: 10vw;
+    border: 1px solid black;
+  }
+
+  .controls,.usersOnline{
+    display: flex;
+    width:15vw;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3vh;
+    padding: 0 6vw;
+  }
+
+
+  .select-box:hover {
+    cursor: pointer;
+    background-color: var(--boxColor);
+  }
+  
+  .d-none {
+    display: none;
+  }
+  .msg {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .reset {
+    padding: 4px 24px;
+    cursor: pointer;
+    margin: 8px;
+  }
+  .winner {
+    font-size: 26px;
+    font-weight: bold;
+  }
+  p {
+    margin: 0;
+  }
+  

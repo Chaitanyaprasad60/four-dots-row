@@ -1,0 +1,31 @@
+<body>
+    <div class="main">
+        <div class="usersOnline">
+            <button mat-raised-button color="primary" (click)="createBoard()">Reset Game</button>
+            <button mat-raised-button color="primary" (click)="createBoard()">2nd Players</button>
+        </div>
+        <div class="container">
+            <div *ngIf="isGameOver">
+                <p>GAME OVER - {{CURRENT_COLOR}} WINS  !!!</p>            
+            </div>
+            <div>
+                <div class="selectors">
+                    <div *ngFor="let sel of [1,2,3,4,5,6,7];let i = index" class="select-box" (click)="moveDone(i)"></div>
+                </div>
+                <div class="board">
+                    <div *ngFor="let x of [0,1,2,3,4,5,6];let i = index">
+                        <div class="box"  *ngFor="let y of [0,1,2,3,4,5];let j = index" [ngStyle]='getBoardColor(j,i)'>    
+                        </div>
+                    </div>
+                </div>   
+            </div>        
+             
+        </div>
+        <div class="controls">
+            <button mat-raised-button color="primary" (click)="createBoard()">Reset Game</button>
+            <button mat-raised-button color="primary" (click)="createBoard()">2nd Players</button>
+        </div>
+    </div>
+   
+        
+</body>
