@@ -16,7 +16,7 @@ const io = new Server(httpServer, {
     origin: ["http://localhost:4200","http://localhost:8080"]
   }
  });
-let clientGlobal;
+let clientGlobal; 
 io.on('connection', client => { 
     clientGlobal = client;
     client.on('event', data => { console.log("event Event Handler",data) });
