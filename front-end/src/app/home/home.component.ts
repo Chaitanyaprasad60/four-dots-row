@@ -62,6 +62,10 @@ export class HomeComponent implements OnInit {
       this.currentMove = this.currentMove == "player1" ? "player2":"player1";     
     })
 
+    this.socket.on("resetGameClient",(data)=>{
+      this.createBoard();
+    })
+
 
     this.createBoard();
     
@@ -78,7 +82,7 @@ export class HomeComponent implements OnInit {
         this.player = param['playerType'];
         this.gameId = param['gameId'];
         console.log("Details",this.player1,this.player2,this.gameId)
-        if(this.player1) this.freezeMove = false; //Player 1 Starts and then afer his move player 2 move is unfreezed
+        //if(this.player1) this.freezeMove = false; //Player 1 Starts and then afer his move player 2 move is unfreezed
         this.PLAYER_COLOR = this.player1 ? "red" : "yellow"; //Player 1 Always get red and player 2 Yellow
         this.document.documentElement.style.setProperty('--boxColor', this.PLAYER_COLOR); //This is to display color in selectors
         this.joinGame(this.gameId);
@@ -269,10 +273,15 @@ export class HomeComponent implements OnInit {
 
   createBoard() {
     this.isGameOver = false;
+    this.currentMove = "player1";
     this.arr = [];
     for (let i = 0; i < 6; i++) {
       this.arr.push(Array(7).fill(null));
     }
+  }
+
+  resetBoard(){
+    this.apiCall.resetGame(this.gameId).subscribe();
   }
 
   alertUser(message:string){

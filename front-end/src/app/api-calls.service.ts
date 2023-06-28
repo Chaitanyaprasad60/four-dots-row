@@ -17,4 +17,9 @@ export class ApiCallsService {
     return this.http.post(url, {roomId,move,index}, { headers })
   }
 
+  public resetGame(roomId:string){
+    let url = backendUrl + 'resetGame';
+    return this.http.post(url, {roomId}, { headers })
+  }
+
 }
