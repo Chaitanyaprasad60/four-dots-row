@@ -24,7 +24,8 @@ const io = new Server(httpServer, {
 let clientGlobal = [];
 io.on('connection', client => {
     //clientGlobal.push(client);
-    client.on('event', data => { console.log("event Event Handler", data) });
+    client.on('event', data => { //console.log("event Event Handler", data) 
+    });
     client.on('disconnect', () => {  //On Connect and Disconnect we update the UI for Player online status
         try {
             //console.log("disconnect Event Handler",client.roomId);

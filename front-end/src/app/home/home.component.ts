@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit {
       
 
     this.socket.on("connect", () => {
-      console.log(this.socket.id); // x8WIv7-mJelg7on_ALbx
+      //console.log(this.socket.id); // x8WIv7-mJelg7on_ALbx
     });
     this.socket.on("moveDoneClient", (data) => {
       let color = data.move == "player1" ? "red" : "yellow";
@@ -67,7 +67,7 @@ export class HomeComponent implements OnInit {
     })
 
     this.socket.on("playersStatus",(data)=>{
-      console.log("kjkjh",data)
+      //console.log("kjkjh",data)
       let players = Array.from(data.roomData);
       
       if(players.length == 2){
@@ -83,7 +83,7 @@ export class HomeComponent implements OnInit {
           this.playerOnline[otherPlayer] = false;
         }
       }
-      console.log("lklk",players,this.playerOnline)
+      //console.log("lklk",players,this.playerOnline)
       
     })
 
@@ -106,7 +106,7 @@ export class HomeComponent implements OnInit {
         this.player2 = param['playerType'] == "player2";
         this.player = param['playerType'];
         this.gameId = param['gameId'];
-        console.log("Details",this.player1,this.player2,this.gameId)
+        //console.log("Details",this.player1,this.player2,this.gameId)
         //if(this.player1) this.freezeMove = false; //Player 1 Starts and then afer his move player 2 move is unfreezed
         this.PLAYER_COLOR = this.player1 ? "red" : "yellow"; //Player 1 Always get red and player 2 Yellow
         this.document.documentElement.style.setProperty('--boxColor', this.PLAYER_COLOR); //This is to display color in selectors
@@ -144,7 +144,7 @@ export class HomeComponent implements OnInit {
     
     this.apiCall.moveDone(this.gameId,this.player,index).subscribe((resp:any)=>{
       if(resp.status == "success"){
-        this.alertUser("Move Success")
+        //this.alertUser("Move Success")
       }else{
         this.alertUser("Move Failed due to "+resp.response);
       }

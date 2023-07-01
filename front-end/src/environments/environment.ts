@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  backendUrl:"http://four-dots-row-git-chaitanya60-dev.apps.sandbox-m3.1530.p1.openshiftapps.com",
+  backendUrl:"https://four-dots-row-git4-chaitanya60-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/",
   uiUrl:"http://localhost:4200/"
 };
 
