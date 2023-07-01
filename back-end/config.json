@@ -1,0 +1,10 @@
+{
+    "mode":"local",
+    "prod":{
+        "frontEnd":""
+    },
+    "local":{
+        "frontEnd":"http://localhost:4200"
+    }
+   
+}

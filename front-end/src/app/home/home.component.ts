@@ -8,6 +8,7 @@ import { ApiCallsService } from '../api-calls.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { Clipboard } from '@angular/cdk/clipboard';
 
+
 let backendUrl = environment.backendUrl;
 
 
@@ -37,6 +38,10 @@ export class HomeComponent implements OnInit {
   player = "";
   currentMove = ""; //This is to maintain the state of this code. 
   title= "";
+  playerOnline:{ [key: string]: boolean }  = {   //Offline -false, Online - true
+    "player1":false,
+    "player2":false
+  }
 
   constructor(private route: ActivatedRoute,
     private router:Router,
@@ -51,7 +56,6 @@ export class HomeComponent implements OnInit {
       console.log(this.socket.id); // x8WIv7-mJelg7on_ALbx
     });
     this.socket.on("moveDoneClient", (data) => {
-      console.log("kjhjkh", data)
       let color = data.move == "player1" ? "red" : "yellow";
       this.fillColor(data.index, color);
       if (this.checkForWinner()) {
@@ -60,6 +64,27 @@ export class HomeComponent implements OnInit {
       }
       
       this.currentMove = this.currentMove == "player1" ? "player2":"player1";     
+    })
+
+    this.socket.on("playersStatus",(data)=>{
+      console.log("kjkjh",data)
+      let players = Array.from(data.roomData);
+      
+      if(players.length == 2){
+        this.playerOnline = {  
+          "player1":true,
+          "player2":true
+        }
+      }else{
+        if(players.includes(this.socket.id)){
+          //let a = this.player as keyof typeof this.playerOnline;
+          this.playerOnline[this.player] = true;
+          let otherPlayer = this.player1 ? "player2" : "player1";
+          this.playerOnline[otherPlayer] = false;
+        }
+      }
+      console.log("lklk",players,this.playerOnline)
+      
     })
 
     this.socket.on("resetGameClient",(data)=>{
@@ -110,13 +135,12 @@ export class HomeComponent implements OnInit {
   moveDone(index: number) {
     if(this.currentMove != this.player) return
 
-    if(this.isGameOver) return
-    console.log({ index })
-    // this.fillColor(index, this.PLAYER_COLOR)
+    if(!(this.playerOnline['player1'] && this.playerOnline['player2'])){
+      this.alertUser("All Players have not joined")
+      return;
+    }
 
-    // if (this.checkForWinner()) {
-    //   this.isGameOver = true;
-    // }
+    if(this.isGameOver) return
     
     this.apiCall.moveDone(this.gameId,this.player,index).subscribe((resp:any)=>{
       if(resp.status == "success"){
@@ -294,7 +318,6 @@ export class HomeComponent implements OnInit {
     
     const urlTree = this.router.createUrlTree([currentUrl], { queryParams: newParams });
     const url = this.router.serializeUrl(urlTree);
-    console.log("kjh",url)
     window.open(url, '_blank'); // Open the link in a new tab
     this.alertUser("Player 2 opened in new Tab");
   }
@@ -304,9 +327,13 @@ export class HomeComponent implements OnInit {
     const newParams = { "gameId":this.gameId, playerType: 'player2' }; // Define the route parameters
 
     const urlTree = this.router.createUrlTree([currentUrl], { queryParams: newParams });
-    const url = this.router.serializeUrl(urlTree);
+    const url = environment.uiUrl + this.router.serializeUrl(urlTree);
     this.clipboard.copy(url);
     this.alertUser("Player 2 Link Copied");
+  }
+
+  getPlayerStatusHtml(player:string){
+    return this.playerOnline[player] ? 'Online':'Offline';
   }
 
 

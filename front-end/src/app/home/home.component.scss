@@ -95,4 +95,20 @@
   p {
     margin: 0;
   }
+  .Online{
+    background-color: green;
+    border-radius: 50%;
+    width: 1vw;
+    height: 1vw;
+    margin-left: 1vw;
+    display: inline-block;
+  }
+  .Offline{
+    background-color: red;
+    border-radius: 50%;
+    width: 1vw;
+    height: 1vw;
+    margin-left: 1vw;
+    display: inline-block;
+  }
   

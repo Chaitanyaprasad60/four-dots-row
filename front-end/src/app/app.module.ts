@@ -10,6 +10,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule, 
-    MatButtonModule, MatDividerModule, MatIconModule,MatSnackBarModule,
+    MatButtonModule, MatDividerModule, MatIconModule,MatSnackBarModule,MatTooltipModule,
     BrowserAnimationsModule
   ],
   providers: [],

@@ -1,32 +1,40 @@
 <body>
     <div class="main">
         <div class="usersOnline">
-            <button mat-raised-button color="primary" (click)="resetBoard()">Reset Game</button>
-            <button mat-raised-button color="primary" (click)="createBoard()">2nd Players</button>
+            <button mat-raised-button color="accent" [matTooltip]="getPlayerStatusHtml('player1')">
+                Player 1 <span [ngClass]="getPlayerStatusHtml('player1')"></span></button>
+            <button mat-raised-button color="accent" [matTooltip]="getPlayerStatusHtml('player2')">Player 2
+                <span [ngClass]="getPlayerStatusHtml('player2')"></span></button>
+
         </div>
         <div class="container">
             <h1>{{title}}</h1>
             <div *ngIf="isGameOver">
-                <p>GAME OVER - {{currentMove}} WINS  !!!</p>            
+                <p>GAME OVER - {{currentMove}} WINS !!!</p>
             </div>
             <div>
                 <div class="selectors">
-                    <div *ngFor="let sel of [1,2,3,4,5,6,7];let i = index" class="select-box" (click)="moveDone(i)"></div>
+                    <div *ngFor="let sel of [1,2,3,4,5,6,7];let i = index" class="select-box" (click)="moveDone(i)">
+                    </div>
                 </div>
                 <div class="board">
                     <div *ngFor="let x of [0,1,2,3,4,5,6];let i = index">
-                        <div class="box"  *ngFor="let y of [0,1,2,3,4,5];let j = index" [ngStyle]='getBoardColor(j,i)'>    
+                        <div class="box" *ngFor="let y of [0,1,2,3,4,5];let j = index" [ngStyle]='getBoardColor(j,i)'>
                         </div>
                     </div>
-                </div>   
-            </div>        
-             
+                </div>
+            </div>
+
         </div>
         <div class="controls">
-            <button [disabled]="player2" mat-raised-button color="primary" (click)="copyPlayer2()"><mat-icon>content_copy</mat-icon> Get Player 2 Link</button>
-            <button [disabled]="player2" mat-raised-button color="primary" (click)="openPlayer2()"><mat-icon>open_in_new</mat-icon> Open Player 2</button>
+            <button [disabled]="player2" mat-raised-button color="primary"
+                (click)="copyPlayer2()"><mat-icon>content_copy</mat-icon> Get Player 2 Link</button>
+            <button mat-raised-button color="primary" (click)="resetBoard()">
+                <mat-icon>refresh</mat-icon> Reset Game</button>
+            <button [disabled]="player2" mat-raised-button color="primary"
+                (click)="openPlayer2()"><mat-icon>open_in_new</mat-icon> Open Player 2</button>
         </div>
     </div>
-   
-        
+
+
 </body>
