@@ -8,6 +8,8 @@ const app = express();
 let config = require("./config.json");
 const database = require("mime-db");
 config = config[config['mode']];
+let frontEnd = process.env.frontEnd || config.frontEnd;
+let port = process.env.port || 3000;
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -16,7 +18,7 @@ app.use(bodyParser.json());
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
     cors: {
-        origin: [config.frontEnd]
+        origin: [frontEnd]
     }
 });
 let clientGlobal = [];
@@ -25,11 +27,11 @@ io.on('connection', client => {
     client.on('event', data => { console.log("event Event Handler", data) });
     client.on('disconnect', () => {  //On Connect and Disconnect we update the UI for Player online status
         try {
-            console.log("disconnect Event Handler",client.roomId);
+            //console.log("disconnect Event Handler",client.roomId);
             let roomData = Array.from(io.sockets.adapter.rooms.get(client.roomId));
             io.sockets.to(client.roomId).emit('playersStatus', { roomData });
-        } catch (error) { console.log("Error in DisConnect Socket Backend ", error) }
-
+        } catch (error) { //console.log("Error in DisConnect Socket Backend ", error) 
+        }
 
     });
     client.on('joinGame', (data) => {  //On Connect and Disconnect we update the UI for Player online status
@@ -37,9 +39,10 @@ io.on('connection', client => {
             client.roomId = data.roomId;
             client.join(data.roomId)
             let roomData = Array.from(io.sockets.adapter.rooms.get(data.roomId));
-            console.log(roomData)
+            //console.log(roomData)
             io.sockets.to(data.roomId).emit('playersStatus', { roomData });
-        } catch (error) { console.log("Error in Connect Socket Backend ", error) }
+        } catch (error) { //console.log("Error in Connect Socket Backend ", error) 
+        }
     })
     client.on('error', (error) => {
         console.log(error)
@@ -62,7 +65,7 @@ app.post('/moveDone', function (req, res) {
         })
     }
     catch (error) {
-        console.log("Error in moveDone API ", error)
+        //console.log("Error in moveDone API ", error)
     }
 
 })
@@ -81,4 +84,4 @@ app.post('/resetGame', function (req, res) {
         response: "Move Succesful"
     })
 })
-httpServer.listen(3000);
+httpServer.listen(port);
