@@ -328,7 +328,7 @@ export class HomeComponent implements OnInit {
     const newParams = { "gameId": this.gameId, playerType: 'player2' }; // Define the route parameters
 
     const urlTree = this.router.createUrlTree([currentUrl], { queryParams: newParams });
-    const url = this.router.serializeUrl(urlTree);
+    const url = environment.uiUrl + this.router.serializeUrl(urlTree);
     window.open(url, '_blank'); // Open the link in a new tab
     this.alertUser("Player 2 opened in new Tab");
   }

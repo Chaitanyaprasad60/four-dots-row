@@ -4,6 +4,8 @@ COPY package*.json ./
 
 RUN npm install
 
+ARG frontEnd='https://chaitanyaprasad60.github.io/four-dots-row/'
+
 COPY . .
 
 EXPOSE 3000

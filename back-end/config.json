@@ -1,7 +1,7 @@
 {
     "mode":"local",
     "prod":{
-        "frontEnd":""
+        "frontEnd":"https://chaitanyaprasad60.github.io/four-dots-row/"
     },
     "local":{
         "frontEnd":"http://localhost:4200"
