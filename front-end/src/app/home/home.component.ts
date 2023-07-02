@@ -328,7 +328,8 @@ export class HomeComponent implements OnInit {
     const newParams = { "gameId": this.gameId, playerType: 'player2' }; // Define the route parameters
 
     const urlTree = this.router.createUrlTree([currentUrl], { queryParams: newParams });
-    const url = environment.uiUrl + this.router.serializeUrl(urlTree);
+    //const url = environment.uiUrl + this.router.serializeUrl(urlTree);
+    const url = 'https://chaitanyaprasad60.github.io/four-dots-row/#/home' + `?gameId=${this.gameId}&playerType=player2`;
     window.open(url, '_blank'); // Open the link in a new tab
     this.alertUser("Player 2 opened in new Tab");
   }
@@ -338,7 +339,8 @@ export class HomeComponent implements OnInit {
     const newParams = { "gameId": this.gameId, playerType: 'player2' }; // Define the route parameters
 
     const urlTree = this.router.createUrlTree([currentUrl], { queryParams: newParams });
-    const url = environment.uiUrl + this.router.serializeUrl(urlTree);
+    //const url = environment.uiUrl + this.router.serializeUrl(urlTree);
+    const url = 'https://chaitanyaprasad60.github.io/four-dots-row/#/home' + `?gameId=${this.gameId}&playerType=player2`;
     this.clipboard.copy(url);
     this.alertUser("Player 2 Link Copied");
   }
