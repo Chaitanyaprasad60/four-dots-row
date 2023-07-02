@@ -1,13 +1,12 @@
-import { Component, OnInit, Inject,ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
 import { io } from "socket.io-client";
 import { environment } from 'src/environments/environment';
-import {ActivatedRoute} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { ApiCallsService } from '../api-calls.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Clipboard } from '@angular/cdk/clipboard';
-
 
 let backendUrl = environment.backendUrl;
 
@@ -37,20 +36,20 @@ export class HomeComponent implements OnInit {
   gameId = "";
   player = "";
   currentMove = ""; //This is to maintain the state of this code. 
-  title= "";
-  playerOnline:{ [key: string]: boolean }  = {   //Offline -false, Online - true
-    "player1":false,
-    "player2":false
+  title = "";
+  playerOnline: { [key: string]: boolean } = {   //Offline -false, Online - true
+    "player1": false,
+    "player2": false
   }
 
   constructor(private route: ActivatedRoute,
-    private router:Router,
+    private router: Router,
     @Inject(DOCUMENT) private document: Document,
     private apiCall: ApiCallsService,
     private snackBar: MatSnackBar,
     private clipboard: Clipboard) {
 
-      
+
 
     this.socket.on("connect", () => {
       //console.log(this.socket.id); // x8WIv7-mJelg7on_ALbx
@@ -60,23 +59,29 @@ export class HomeComponent implements OnInit {
       this.fillColor(data.index, color);
       if (this.checkForWinner()) {
         this.isGameOver = true;
+        if (this.currentMove == this.player) {
+          this.playWinAudio();
+        }
+        else {
+          this.playLoseAudio();
+        }
         return
       }
-      
-      this.currentMove = this.currentMove == "player1" ? "player2":"player1";     
+
+      this.currentMove = this.currentMove == "player1" ? "player2" : "player1";
     })
 
-    this.socket.on("playersStatus",(data)=>{
+    this.socket.on("playersStatus", (data) => {
       //console.log("kjkjh",data)
       let players = Array.from(data.roomData);
-      
-      if(players.length == 2){
-        this.playerOnline = {  
-          "player1":true,
-          "player2":true
+
+      if (players.length == 2) {
+        this.playerOnline = {
+          "player1": true,
+          "player2": true
         }
-      }else{
-        if(players.includes(this.socket.id)){
+      } else {
+        if (players.includes(this.socket.id)) {
           //let a = this.player as keyof typeof this.playerOnline;
           this.playerOnline[this.player] = true;
           let otherPlayer = this.player1 ? "player2" : "player1";
@@ -84,24 +89,24 @@ export class HomeComponent implements OnInit {
         }
       }
       //console.log("lklk",players,this.playerOnline)
-      
+
     })
 
-    this.socket.on("resetGameClient",(data)=>{
+    this.socket.on("resetGameClient", (data) => {
       this.createBoard();
     })
 
 
     this.createBoard();
-    
 
-    this.route.queryParams.subscribe((param)=>{
-      if(!param['gameId'] ||!param['playerType']){ //When directly the URL is called by player 1
+
+    this.route.queryParams.subscribe((param) => {
+      if (!param['gameId'] || !param['playerType']) { //When directly the URL is called by player 1
         let gameId = Math.floor(Math.random() * (89999)) + 10000
         let playerType = "player1"
-        this.router.navigate( [], { queryParams: { gameId,playerType } } );
+        this.router.navigate([], { queryParams: { gameId, playerType } });
       }
-      else{  //Proper URL
+      else {  //Proper URL
         this.player1 = param['playerType'] == "player1";
         this.player2 = param['playerType'] == "player2";
         this.player = param['playerType'];
@@ -112,7 +117,7 @@ export class HomeComponent implements OnInit {
         this.document.documentElement.style.setProperty('--boxColor', this.PLAYER_COLOR); //This is to display color in selectors
         this.joinGame(this.gameId);
         this.currentMove = "player1";
-        this.title = this.player=="player1"? "PLAYER 1" : "PLAYER 2"
+        this.title = this.player == "player1" ? "PLAYER 1" : "PLAYER 2"
       }
     })
 
@@ -128,28 +133,34 @@ export class HomeComponent implements OnInit {
       return { "background-color": "white" };
   }
 
-  joinGame(roomId:string) {
+  joinGame(roomId: string) {
     this.socket.emit("joinGame", { "roomId": roomId })
   }
 
   moveDone(index: number) {
-    if(this.currentMove != this.player) return
+    if (this.currentMove != this.player) return
 
-    if(!(this.playerOnline['player1'] && this.playerOnline['player2'])){
+    if (!(this.playerOnline['player1'] && this.playerOnline['player2'])) {
       this.alertUser("All Players have not joined")
       return;
     }
 
-    if(this.isGameOver) return
-    
-    this.apiCall.moveDone(this.gameId,this.player,index).subscribe((resp:any)=>{
-      if(resp.status == "success"){
+    if (this.isGameOver) {
+
+      return
+    }
+
+    this.playMoveAudio();
+
+
+    this.apiCall.moveDone(this.gameId, this.player, index).subscribe((resp: any) => {
+      if (resp.status == "success") {
         //this.alertUser("Move Success")
-      }else{
-        this.alertUser("Move Failed due to "+resp.response);
+      } else {
+        this.alertUser("Move Failed due to " + resp.response);
       }
     })
-    
+
   }
 
   checkForWinner() {
@@ -304,27 +315,27 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  resetBoard(){
+  resetBoard() {
     this.apiCall.resetGame(this.gameId).subscribe();
   }
 
-  alertUser(message:string){
-    this.snackBar.open(message, 'Dismiss', {duration: 3000})
+  alertUser(message: string) {
+    this.snackBar.open(message, 'Dismiss', { duration: 3000 })
   }
 
-  openPlayer2(){
+  openPlayer2() {
     const currentUrl = this.router.url.split('?')[0];
-    const newParams = { "gameId":this.gameId, playerType: 'player2' }; // Define the route parameters
-    
+    const newParams = { "gameId": this.gameId, playerType: 'player2' }; // Define the route parameters
+
     const urlTree = this.router.createUrlTree([currentUrl], { queryParams: newParams });
     const url = this.router.serializeUrl(urlTree);
     window.open(url, '_blank'); // Open the link in a new tab
     this.alertUser("Player 2 opened in new Tab");
   }
 
-  copyPlayer2(){
+  copyPlayer2() {
     const currentUrl = this.router.url.split('?')[0];
-    const newParams = { "gameId":this.gameId, playerType: 'player2' }; // Define the route parameters
+    const newParams = { "gameId": this.gameId, playerType: 'player2' }; // Define the route parameters
 
     const urlTree = this.router.createUrlTree([currentUrl], { queryParams: newParams });
     const url = environment.uiUrl + this.router.serializeUrl(urlTree);
@@ -332,9 +343,29 @@ export class HomeComponent implements OnInit {
     this.alertUser("Player 2 Link Copied");
   }
 
-  getPlayerStatusHtml(player:string){
-    return this.playerOnline[player] ? 'Online':'Offline';
+  getPlayerStatusHtml(player: string) {
+    return this.playerOnline[player] ? 'Online' : 'Offline';
   }
 
+  playMoveAudio() {
+    let audio = new Audio();
+    audio.src = '../../assets/move.mp3';
+    audio.load();
+    audio.play();
+  }
+
+  playWinAudio() {
+    let audio = new Audio();
+    audio.src = '../../assets/success.mp3';
+    audio.load();
+    audio.play();
+  }
+
+  playLoseAudio() {
+    let audio = new Audio();
+    audio.src = '../../assets/failure.mp3';
+    audio.load();
+    audio.play();
+  }
 
 }

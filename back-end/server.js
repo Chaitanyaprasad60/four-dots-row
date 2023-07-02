@@ -21,30 +21,27 @@ const io = new Server(httpServer, {
         origin: [frontEnd]
     }
 });
-let clientGlobal = [];
+
 io.on('connection', client => {
-    //clientGlobal.push(client);
-    client.on('event', data => { //console.log("event Event Handler", data) 
-    });
+    
+    
     client.on('disconnect', () => {  //On Connect and Disconnect we update the UI for Player online status
         try {
-            //console.log("disconnect Event Handler",client.roomId);
             let roomData = Array.from(io.sockets.adapter.rooms.get(client.roomId));
             io.sockets.to(client.roomId).emit('playersStatus', { roomData });
-        } catch (error) { //console.log("Error in DisConnect Socket Backend ", error) 
-        }
+        } catch (error) {}
 
     });
+
     client.on('joinGame', (data) => {  //On Connect and Disconnect we update the UI for Player online status
         try {
             client.roomId = data.roomId;
             client.join(data.roomId)
             let roomData = Array.from(io.sockets.adapter.rooms.get(data.roomId));
-            //console.log(roomData)
             io.sockets.to(data.roomId).emit('playersStatus', { roomData });
-        } catch (error) { //console.log("Error in Connect Socket Backend ", error) 
-        }
+        } catch (error) {}
     })
+    
     client.on('error', (error) => {
         console.log(error)
     })
@@ -58,8 +55,7 @@ app.post('/moveDone', function (req, res) {
                 response: "Room Id not present to connect"
             })
         }
-
-        io.sockets.to(req.body.roomId).emit('moveDoneClient', { "move": req.body.move, "index": req.body.index, "roomSize": io.sockets.adapter.rooms.get(req.body.roomId).size })
+        io.sockets.to(req.body.roomId).emit('moveDoneClient', { "move": req.body.move, "index": req.body.index})
         return res.status(200).send({
             status: "success",
             response: "Move Succesful"
