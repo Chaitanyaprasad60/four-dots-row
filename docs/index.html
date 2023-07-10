@@ -16,7 +16,7 @@
 <script>
     if (window.location.hash.length > 1) {
       const path = window.location.hash.replace('#', '')
-      history.pushState({ page: 1 }, "Some title", '/four-dot-row/' + path)
+      history.pushState({ page: 1 }, "Some title", '/four-dots-row/' + path)
       console.log("lkjlkjl - ",window.location.hash.length)
       document.getElementById('header').innerHTML = document.getElementById('header').innerHTML.replace('{PATH}', path)
     }
