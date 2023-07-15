@@ -7,9 +7,14 @@ var bodyParser = require('body-parser')
 const app = express();
 let config = require("./config.json");
 const database = require("mime-db");
-config = config[config['mode']];
-let frontEnd = process.env.frontEnd || config.frontEnd;
-let port = process.env.port || 3000;
+let mode = process.env.NODE_ENV || config.mode
+console.log(mode)
+config = config[mode];
+console.log(config)
+let frontEnd = config.frontEnd;
+let port = process.env.PORT || 3000;
+console.log(config)
+
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
