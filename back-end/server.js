@@ -8,12 +8,9 @@ const app = express();
 let config = require("./config.json");
 const database = require("mime-db");
 let mode = process.env.NODE_ENV || config.mode
-console.log(mode)
 config = config[mode];
-console.log(config)
 let frontEnd = config.frontEnd;
 let port = process.env.PORT || 3000;
-console.log(config)
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));

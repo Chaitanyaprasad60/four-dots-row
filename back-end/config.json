@@ -1,7 +1,7 @@
 {
     "mode":"prod",
     "prod":{
-        "frontEnd":"https://chaitanyaprasad60.github.io/"
+        "frontEnd":"https://chaitanyaprasad60.github.io"
     },
     "local":{
         "frontEnd":"http://localhost:4200"
