@@ -16,7 +16,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
+console.log(frontEnd,config,"lkj")
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
     cors: {
