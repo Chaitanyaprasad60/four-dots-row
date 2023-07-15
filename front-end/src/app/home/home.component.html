@@ -2,6 +2,8 @@
     <div class="main">
         <div class="usersOnline">
             <button mat-raised-button color="accent" [matTooltip]="getPlayerStatusHtml('player1')">
+                Room-Id :  {{gameId}}</button>
+            <button mat-raised-button color="accent" [matTooltip]="getPlayerStatusHtml('player1')">
                 Player 1 <span [ngClass]="getPlayerStatusHtml('player1')"></span></button>
             <button mat-raised-button color="accent" [matTooltip]="getPlayerStatusHtml('player2')">Player 2
                 <span [ngClass]="getPlayerStatusHtml('player2')"></span></button>
