@@ -32,7 +32,7 @@ components:
       uri: deploy.yaml
       endpoints:
       - name: http-3000
-        targetPort: 3000
+        targetPort: 80
         path: /
 commands:
   - id: build-image
