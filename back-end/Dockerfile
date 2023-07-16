@@ -6,7 +6,7 @@ RUN npm install
 
 ARG frontEnd='https://chaitanyaprasad60.github.io'
 
-COPY . /opt/app-root/src
+COPY . .
 
 EXPOSE 3000
 ENV PORT 3000
