@@ -126,14 +126,15 @@ p {
   }
   .main{
     flex-direction: column;
+    height: 90vh;
   }
   .container{
-    height: 75vh;
+    height: 70vh;
     width: 95vw;
   }
   .usersOnline,.controls{
     flex-direction: row;
-    height: 15vh;
+    height: 10vh;
     font-size: 5vw;
     width: 90vw;
     justify-content: center;
