@@ -34,9 +34,9 @@
         <div class="controls">
             <button mat-raised-button color="primary" (click)="resetBoard()">
                 <mat-icon>refresh</mat-icon> Reset Game</button>
-            <button id="copyLink" [disabled]="player2" mat-raised-button color="primary"
+            <button  [disabled]="player2" mat-raised-button color="primary"
                 (click)="copyPlayer2()"><mat-icon>content_copy</mat-icon> Get Player 2 Link</button>            
-            <button [disabled]="player2" mat-raised-button color="primary"
+            <button id="openLink" [disabled]="player2" mat-raised-button color="primary"
                 (click)="openPlayer2()"><mat-icon>open_in_new</mat-icon> Open Player 2</button>
         </div>
     </div>

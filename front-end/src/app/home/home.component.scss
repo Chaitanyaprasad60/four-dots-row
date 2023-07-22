@@ -5,6 +5,7 @@
 
 .main {
   height: 100vh;
+  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -117,7 +118,7 @@ p {
 }
 
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 500px) {
   :root {
     --boxWidth: 7vw;
   }
@@ -129,7 +130,7 @@ p {
     height: 90vh;
   }
   .container{
-    height: 70vh;
+    height: 60vh;
     width: 95vw;
   }
   .usersOnline,.controls{
@@ -151,7 +152,7 @@ p {
     transform: scale(0.6);
 
   }
-  #copyLink{
+  #openLink{
     display: none;
   }
   .Online,.Offline {
